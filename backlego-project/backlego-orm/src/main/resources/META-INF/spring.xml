@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-lazy-init="true">
+
+	<!-- 配置会话工厂() -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources"><!-- 源代码中就是用setMappingResources来设置的 -->
+			<list>
+
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			 <props>  
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>   
+                <!--add ehcache-->  
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>  
+                <prop key="hibernate.cache.use_query_cache">false</prop><!-- 是否使用查询缓存 --> 
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">conf/ehcache.xml</prop>  
+                <prop key="hibernate.show_sql">true</prop>  
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>   
+                <!--<prop key="hibernate.transaction.auto_close_session">true</prop>-->  
+                <prop key="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>  
+                <!-- Create/update the database tables automatically when the JVM starts up   -->  
+                 <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!-- Turn batching off for better error messages under PostgreSQL -->  
+                <prop key="hibernate.jdbc.batch_size">25</prop>  
+                <!--  
+                <prop key="hibernate.connection.pool_size">10</prop>  
+                -->  
+            </props>
+		</property>
+	</bean>
+	<!-- 启用注解扫描 -->
+	<context:annotation-config />
+	<!-- 启用事务注解 -->
+	<tx:annotation-driven transaction-manager="txManager" />
+	<!-- 配置事务管理器 统一管理sessionFactory事务 -->
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+</beans>
+
