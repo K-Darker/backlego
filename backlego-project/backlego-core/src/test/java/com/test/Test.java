@@ -29,9 +29,9 @@ public class Test
         {
             Resource[] resources = resolver.getResources("classpath*:META-INF/*.xml");
             //这样才能加载到
-            BeanFactory beanFactory=new ClassPathXmlApplicationContext("classpath*:META-INF/spring*.xml");
+            ClassPathXmlApplicationContext beanFactory=new ClassPathXmlApplicationContext("classpath*:META-INF/spring*.xml");
 //            XmlBeanFactory beanFactory1=new XmlBeanFactory(null);
-            System.out.println(resources[0].getURL());
+            System.out.println(beanFactory.getEnvironment());
             SpringBeanTest springBeanTest = (SpringBeanTest)beanFactory.getBean("springBeanTest");
             System.out.println(springBeanTest);
         }

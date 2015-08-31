@@ -67,6 +67,8 @@ class SpringInit implements Runnable
         System.out.println("==========================satrt init busniess context==================");
         try
         {
+            // java加载所有的配置文件
+            //setConfigLocations(configLocations);
             ApplicationContext ctx = new ClassPathXmlApplicationContext(System.getProperty("configLocation"));
             ClassLoader ccl = Thread.currentThread().getContextClassLoader();
             if (ccl != null)

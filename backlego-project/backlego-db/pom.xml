@@ -26,6 +26,11 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>sybase</groupId>
+			<artifactId>jconn3</artifactId>
+			<version>6.0</version>
+		</dependency>
 		<!-- JDBC驱动 -->
 	</dependencies>
 </project>
