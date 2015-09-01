@@ -27,6 +27,18 @@ public class LaunchInitializtion
     
     private String configureLocations;
     
+    private String launchPriority;
+    
+    public String getLaunchPriority()
+    {
+        return launchPriority;
+    }
+    
+    public void setLaunchPriority(String launchPriority)
+    {
+        this.launchPriority = launchPriority;
+    }
+    
     public String getInitializeClassName()
     {
         return initializeClassName;
