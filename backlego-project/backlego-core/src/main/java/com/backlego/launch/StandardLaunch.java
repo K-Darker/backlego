@@ -10,12 +10,27 @@
 */
 package com.backlego.launch;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.backlego.launch.init.model.LaunchInitializtion;
+import com.backlego.launch.init.model.LaunchInitializtions;
 
 /**
 * 这是启动一个java工程
@@ -26,7 +41,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class StandardLaunch
 {
     public static String configLocation = "classpath*:META-INF/spring.xml";
+    
     public static String log4jLocation = "conf/log4j.properties";
+    
     /** 
     * 启动java工程的主函数
     * @param args
@@ -34,6 +51,48 @@ public class StandardLaunch
     */
     public static void main(String[] args)
     {
+        try
+        {
+            JAXBContext ctx = JAXBContext.newInstance(LaunchInitializtions.class);
+            Unmarshaller um = ctx.createUnmarshaller();
+            try
+            {
+                LaunchInitializtions launchInitializtions =
+                    (LaunchInitializtions)um.unmarshal(new FileReader(
+                        new File(
+                            "D:\\eclipse\\Eclipse Classic v4.2.2\\workspaces\\backlego\\backlego-project\\backlego-core\\src\\main\\resources\\spring.xml")));
+                System.out.println(launchInitializtions);
+            }
+            catch (FileNotFoundException e)
+            {
+                // TODO Auto-generated
+                e.printStackTrace();
+                
+            }
+            
+        }
+        catch (JAXBException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            Enumeration<URL> resourceUrls = ClassLoader.getSystemResources("META-INF/spring.xml");
+            while (resourceUrls.hasMoreElements())
+            {
+                Set result = new LinkedHashSet(16);
+                URL url = resourceUrls.nextElement();
+                System.out.println(url);
+                result.add(url);
+            }
+            
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
         // 设置启动配置文件
         System.setProperty("configLocation", configLocation);
         System.setProperty("log4jLocation", log4jLocation);
@@ -87,12 +146,12 @@ class SpringInit implements Runnable
         
     }
     
-//    public static void initLog4j()
-//    {
-//        String log4jLocation =  System.getProperty("log4jLocation");
-//        System.out.println("log4j configfile path=" + log4jLocation);
-//        PropertyConfigurator.configureAndWatch(log4jLocation, 1000);// 间隔特定时间，检测文件是否修改，自动重新读取配置  
-//    }
+    //    public static void initLog4j()
+    //    {
+    //        String log4jLocation =  System.getProperty("log4jLocation");
+    //        System.out.println("log4j configfile path=" + log4jLocation);
+    //        PropertyConfigurator.configureAndWatch(log4jLocation, 1000);// 间隔特定时间，检测文件是否修改，自动重新读取配置  
+    //    }
     
     public void run()
     {
