@@ -10,7 +10,6 @@
 */
 package com.backlego.launch.init.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
 * <一句话功能简述>
@@ -28,6 +27,18 @@ public class LaunchInitializtion
     private String configureLocations;
     
     private String launchPriority;
+    
+    private String uri;
+    
+    public String getUri()
+    {
+        return uri;
+    }
+    
+    public void setUri(String uri)
+    {
+        this.uri = uri;
+    }
     
     public String getLaunchPriority()
     {

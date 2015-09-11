@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LaunchInitializtions>
-	<LaunchInitializtion>
-		<initializeClassName>Giada De Laurentiis</initializeClassName>
-		<initializeMethod>2005</initializeMethod>
-	</LaunchInitializtion>
-	<LaunchInitializtion>
-		<initializeClassName>Giada De Laurentiis</initializeClassName>
-		<configureLocations>路径</configureLocations>
-	</LaunchInitializtion>
-</LaunchInitializtions>
+<spring:spring xmlns:spring="http://www.hsddf.com/backlego/spring"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<spring:configLocations>
+	<spring:configLocation>
+	<spring:priority>10</spring:priority>
+	<spring:value>classpath*:META-INF/back11lego-core/spring-beans.xml</spring:value>
+	</spring:configLocation>
+	</spring:configLocations>
+</spring:spring
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<launcher:launcher
+xmlns:launcher="http://www.hsdfi.com/backlego/launcher"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!-- 
+<launcher:initializers>
+<launcher:initializer>
+<launcher:priority>10</launcher:priority>
+<launcher:static>true</launcher:static>
+<launcher:className>com.husdf.backlego.spring.ApplicationContextHolder
+</launcher:className>
+<launcher:methodName>init</launcher:methodName>
+</launcher:initializer>
+</launcher:initializers>
+-->
+</launcher:launcher>

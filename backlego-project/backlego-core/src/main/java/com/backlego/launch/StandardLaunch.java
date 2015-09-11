@@ -10,24 +10,26 @@
 */
 package com.backlego.launch;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import com.backlego.launch.init.model.LaunchInitializtion;
 import com.backlego.launch.init.model.LaunchInitializtions;
@@ -38,11 +40,14 @@ import com.backlego.launch.init.model.LaunchInitializtions;
 * @author Administrator
 * @version [版本号, 2015-8-31]
 */
+@SuppressWarnings("restriction")
 public class StandardLaunch
 {
     public static String configLocation = "classpath*:META-INF/spring.xml";
     
     public static String log4jLocation = "conf/log4j.properties";
+    
+    public static List<String> initConfigureList = null;
     
     /** 
     * 启动java工程的主函数
@@ -51,29 +56,111 @@ public class StandardLaunch
     */
     public static void main(String[] args)
     {
+        // 设置启动配置文件
+        System.setProperty("log4jLocation", log4jLocation);
         try
         {
+            // 使用xml to java的方法然后用java反射机制初始话spring 不仅可以初始化core 还可以初始化其他工程下的
             JAXBContext ctx = JAXBContext.newInstance(LaunchInitializtions.class);
             Unmarshaller um = ctx.createUnmarshaller();
-            try
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            Resource[] resources = resolver.getResources(configLocation);
+            List<LaunchInitializtion> initMethodList = new ArrayList<LaunchInitializtion>();
+            initConfigureList = new ArrayList<String>();
+            for (Resource resource : resources)
             {
                 LaunchInitializtions launchInitializtions =
-                    (LaunchInitializtions)um.unmarshal(new FileReader(
-                        new File(
-                            "D:\\eclipse\\Eclipse Classic v4.2.2\\workspaces\\backlego\\backlego-project\\backlego-core\\src\\main\\resources\\spring.xml")));
-                System.out.println(launchInitializtions);
+                    (LaunchInitializtions)um.unmarshal(new InputStreamReader(resource.getInputStream()));
+                List<LaunchInitializtion> temp = launchInitializtions.getListLaunchInitializtion();
+                for (LaunchInitializtion launchInitializtion : temp)
+                {
+                    // 取出classname 和方法去invoke
+                    String className = launchInitializtion.getInitializeClassName();
+                    String configureLocations = launchInitializtion.getConfigureLocations();
+                    if (StringUtils.isNotEmpty(className))
+                    {
+                        initMethodList.add(launchInitializtion);
+                    }
+                    if (StringUtils.isNotEmpty(configureLocations))
+                    {
+                        //直接组装数组
+                        initConfigureList.add(resource.getFile().getAbsolutePath().replace("META-INF\\spring.xml", "")
+                            + configureLocations);
+                    }
+                }
             }
-            catch (FileNotFoundException e)
+            //反射 launchInitializtionList
+            for (LaunchInitializtion launchInitializtion : initMethodList)
             {
-                // TODO Auto-generated
-                e.printStackTrace();
-                
+                // 取出classname 和方法去invoke
+                String className = launchInitializtion.getInitializeClassName();
+                String method = launchInitializtion.getInitializeMethod();
+                if (StringUtils.isNotEmpty(className))
+                {
+                    Class<?> initClass = Class.forName(className);
+                    Object instance = initClass.newInstance();
+                    Method initMethod = initClass.getDeclaredMethod(method, null);
+                    initMethod.invoke(instance, null);
+                }
             }
+            
+        }
+        catch (FileNotFoundException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
             
         }
         catch (JAXBException e)
         {
             e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            
+        }
+        catch (NoSuchMethodException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
+        catch (SecurityException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
+        catch (IllegalAccessException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
+        catch (IllegalArgumentException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
+        catch (InvocationTargetException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
+        }
+        catch (InstantiationException e)
+        {
+            // TODO Auto-generated
+            e.printStackTrace();
+            
         }
         try
         {
@@ -85,7 +172,8 @@ public class StandardLaunch
                 System.out.println(url);
                 result.add(url);
             }
-            
+            // make the application wait until we press a key.
+            System.in.read();
         }
         catch (IOException e)
         {
@@ -93,81 +181,7 @@ public class StandardLaunch
             e.printStackTrace();
             
         }
-        // 设置启动配置文件
-        System.setProperty("configLocation", configLocation);
-        System.setProperty("log4jLocation", log4jLocation);
-        //初始话spring
-        SpringInit.init();
-        //启动线程
-        Thread thread = new Thread(new SpringInit());
-        thread.start();
-    }
-    
-}
-
-class SpringInit implements Runnable
-{
-    private static final Map<ClassLoader, ApplicationContext> currentContextPerThread =
-        new ConcurrentHashMap<ClassLoader, ApplicationContext>(1);
-    
-    public SpringInit()
-    {
         
-    }
-    
-    public static void init()
-    {
-        //系统参数初始化
-        
-        System.out.println("SpringInit:" + SpringInit.class);
-        long startTime = System.currentTimeMillis();
-        // 加载log4j
-        //initLog4j();
-        System.out.println("==========================satrt init busniess context==================");
-        try
-        {
-            // java加载所有的配置文件
-            //setConfigLocations(configLocations);
-            ApplicationContext ctx = new ClassPathXmlApplicationContext(System.getProperty("configLocation"));
-            ClassLoader ccl = Thread.currentThread().getContextClassLoader();
-            if (ccl != null)
-            {
-                currentContextPerThread.put(ccl, ctx);
-            }
-            
-        }
-        catch (BeansException e)
-        {
-            // TODO: handle exception
-        }
-        
-        long elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println("============================end cost " + elapsedTime + "ms ====");
-        
-    }
-    
-    //    public static void initLog4j()
-    //    {
-    //        String log4jLocation =  System.getProperty("log4jLocation");
-    //        System.out.println("log4j configfile path=" + log4jLocation);
-    //        PropertyConfigurator.configureAndWatch(log4jLocation, 1000);// 间隔特定时间，检测文件是否修改，自动重新读取配置  
-    //    }
-    
-    public void run()
-    {
-        while (true)
-        {
-            try
-            {
-                Thread.sleep(50000);
-            }
-            catch (InterruptedException e)
-            {
-                // TODO Auto-generated
-                e.printStackTrace();
-                
-            }
-        }
     }
     
 }

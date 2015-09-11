@@ -23,10 +23,12 @@ import javax.xml.bind.annotation.XmlAccessType;
 * @author Administrator
 * @version [版本号, 2015-9-1]
 */
+@SuppressWarnings("restriction")
 @XmlRootElement(name = "LaunchInitializtions")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class LaunchInitializtions
 {
+
     @XmlElement(name = "LaunchInitializtion")
     private List<LaunchInitializtion> listLaunchInitializtion;
     

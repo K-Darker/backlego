@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launcher>
+	<initializers>
+		<initializer>
+			<priority>10</priority>
+			<static>false</static>
+			<className>com.backlego.launch.spring.init.SpringInitializer</className>
+			<methodName>run</methodName>
+		</initializer>
+	</initializers>
+</launcher>
