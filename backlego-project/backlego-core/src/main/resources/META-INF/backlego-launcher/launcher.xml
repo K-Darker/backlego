@@ -4,7 +4,13 @@
 		<initializer>
 			<priority>10</priority>
 			<static>false</static>
-			<className>com.backlego.launch.spring.init.SpringInitializer</className>
+			<className>com.backlego.core.launch.log.loader.impl.Log4jLoaderImpl</className>
+			<methodName>load</methodName>
+		</initializer>
+		<initializer>
+			<priority>10</priority>
+			<static>false</static>
+			<className>com.backlego.core.launch.spring.init.SpringInitializer</className>
 			<methodName>run</methodName>
 		</initializer>
 	</initializers>
