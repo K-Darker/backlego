@@ -20,11 +20,14 @@ package com.backlego.core.launch.xml.loader.model;
 public class Initializer
 {
     private Parameters parameters;
+    
     private String className;
     
     private String methodName;
     
     private boolean isStatic;
+    
+    private int priority;
     
     /**
     * @return 返回  parameters
@@ -33,7 +36,7 @@ public class Initializer
     {
         return parameters;
     }
-
+    
     /**
     * @param  parameters进行赋值
     */
@@ -41,7 +44,7 @@ public class Initializer
     {
         this.parameters = parameters;
     }
-
+    
     /**
     * @return 返回  className
     */
@@ -88,6 +91,16 @@ public class Initializer
     public void setStatic(boolean isStatic)
     {
         this.isStatic = isStatic;
+    }
+    
+    public int getPriority()
+    {
+        return priority;
+    }
+    
+    public void setPriority(int priority)
+    {
+        this.priority = priority;
     }
     
 }

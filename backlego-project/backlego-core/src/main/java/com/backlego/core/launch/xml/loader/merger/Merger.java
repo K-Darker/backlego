@@ -9,6 +9,11 @@
 * 修改内容:<修改内容>
 */
 package com.backlego.core.launch.xml.loader.merger;
+
+import java.util.List;
+
+import com.backlego.core.launch.xml.loader.model.Initializers;
+
 /**
 * <一句话功能简述>
 * <功能详细描述>
@@ -18,7 +23,9 @@ package com.backlego.core.launch.xml.loader.merger;
 */
 public interface Merger<T>
 {
-    T merge(T result,T t);
+    public T merge(List<T> objects);
+    
+    public T merge(T object1, T object2);
 }
 
 	

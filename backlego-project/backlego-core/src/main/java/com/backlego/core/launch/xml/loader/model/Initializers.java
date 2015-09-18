@@ -10,6 +10,7 @@
 */
 package com.backlego.core.launch.xml.loader.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 */
 public class Initializers
 {
-    private List<Initializer> initializer;
+    private List<Initializer> initializer =new ArrayList<Initializer>();
     
     /**
     * @return 返回  initializer

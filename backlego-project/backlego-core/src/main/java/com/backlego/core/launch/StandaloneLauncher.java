@@ -157,7 +157,6 @@ public class StandaloneLauncher
         return map;
     }
     
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private static XmlConfigLoader<Launcher> buildXmlConfigLoader()
     {
         XmlConfigLoaderImpl<Launcher> configLoader = new XmlConfigLoaderImpl<Launcher>();

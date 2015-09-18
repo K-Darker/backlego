@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:launcher="http://www.h23ei.com/bawecklrego/launcher"
+	targetNamespace="http://www.hwretwi.com/bacsdfklgo/launcher"
+	elementFormDefault="qualified">
+	<xs:complexType name="Parameter">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="value" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Initializer">
+		<xs:sequence>
+			<xs:element name="priority" type="xs:int" />
+			<xs:element default="true" minOccurs="0" name="static"
+				type="xs:boolean" />
+			<xs:element name="className" type="xs:string" />
+			<xs:element name="methodName" type="xs:string" />
+			<xs:element minOccurs="0" name="parameters">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="parameter"
+							type="launcher:Parameter" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Launcher">
+		<xs:sequence>
+			<xs:element name="initializers" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="initializer" type="launcher:Initializer"
+							maxOccurs="unbounded" minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="launcher" type="launcher:Launcher" />
+</xs:schema>

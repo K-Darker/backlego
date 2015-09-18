@@ -57,17 +57,6 @@ public class SpringInitializer
         
         long elapsedTime = System.currentTimeMillis() - startTime;
         System.out.println("============================end cost " + elapsedTime + "ms ====");
-        try
-        {
-            System.in.read();
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated
-            		e.printStackTrace();
-            	
-        }
+        
     }
 }
-
-	
