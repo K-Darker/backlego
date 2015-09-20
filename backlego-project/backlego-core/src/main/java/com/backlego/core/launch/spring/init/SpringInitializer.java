@@ -10,13 +10,18 @@
 */
 package com.backlego.core.launch.spring.init;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.backlego.core.launch.xml.loader.exception.ConfigParseException;
+import com.backlego.core.launch.xml.loader.impl.XmlConfigLoaderImpl;
+import com.backlego.core.launch.xml.loader.merger.SpringMerger;
+import com.backlego.core.launch.xml.loader.model.Launcher;
+import com.backlego.core.launch.xml.spring.model.Spring;
 
 /**
 * <一句话功能简述>
@@ -42,6 +47,19 @@ public class SpringInitializer
         {
             // java加载所有的配置文件
             //String [] locations = StandardLaunch.initConfigureList.toArray((new String[StandardLaunch.initConfigureList.size()]));
+            XmlConfigLoaderImpl<Spring> configLoader = new XmlConfigLoaderImpl<Spring>();
+            configLoader.setContextPath(Spring.class.getPackage().getName());
+            configLoader.setMerger(new SpringMerger());
+            try
+            {
+                configLoader.loadAndMerge("classpath*:META-INF/backlego-spring/*-beans.xml");
+            }
+            catch (ConfigParseException e)
+            {
+                // TODO Auto-generated
+                e.printStackTrace();
+                	
+            }
             ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:conf/*beans.xml");
             ClassLoader ccl = Thread.currentThread().getContextClassLoader();
             if (ccl != null)

@@ -1,5 +1,5 @@
 /*
-* 文 件 名: Initializer.java
+ 文 件 名: Initializer.java
 * 版 权: xxx., Ltd. Copyright 2015-2015, All rights reserved
 * 描 述: <描述>
 * 修 改 人:Administrator

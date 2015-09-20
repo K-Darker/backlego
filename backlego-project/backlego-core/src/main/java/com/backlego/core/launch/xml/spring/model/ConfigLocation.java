@@ -1,39 +1,44 @@
 /*
-* 文 件 名: Parameter.java
+* 文 件 名: ConfigLocation.java
 * 版 权: xxx., Ltd. Copyright 2015-2015, All rights reserved
 * 描 述: <描述>
 * 修 改 人:Administrator
-* 修改时间: 2015-9-9
+* 修改时间: 2015-9-20
 * 跟踪单号: <跟踪单号>
 * 修改单号: <修改单号>
 * 修改内容:<修改内容>
 */
-package com.backlego.core.launch.xml.loader.model;
+package com.backlego.core.launch.xml.spring.model;
+
 /**
 * <一句话功能简述>
 * <功能详细描述>
 *
 * @author Administrator
-* @version [版本号, 2015-9-9]
+* @version [版本号, 2015-9-20]
 */
-public class Parameter
+public class ConfigLocation
 {
-    private String name;
+    private int priority;
+    
     private String value;
+    
     /**
-    * @return 返回  name
+    * @return 返回  priority
     */
-    public String getName()
+    public int getPriority()
     {
-        return name;
+        return priority;
     }
+    
     /**
-    * @param  name进行赋值
+    * @param  priority进行赋值
     */
-    public void setName(String name)
+    public void setPriority(int priority)
     {
-        this.name = name;
+        this.priority = priority;
     }
+    
     /**
     * @return 返回  value
     */
@@ -41,6 +46,7 @@ public class Parameter
     {
         return value;
     }
+    
     /**
     * @param  value进行赋值
     */
@@ -49,7 +55,4 @@ public class Parameter
         this.value = value;
     }
     
-    
 }
-
-	

@@ -100,8 +100,8 @@ public class XmlConfigLoaderImpl<T> implements XmlConfigLoader<T>
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         try
         {
-//            JAXBContext context = JAXBContext.newInstance(contextPath);
-            JAXBContext context = JAXBContext.newInstance(Launcher.class);
+            JAXBContext context = JAXBContext.newInstance(contextPath);
+//            JAXBContext context = JAXBContext.newInstance(Launcher.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return load(locs, resourcePatternResolver, unmarshaller);
         }
@@ -175,6 +175,7 @@ public class XmlConfigLoaderImpl<T> implements XmlConfigLoader<T>
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             throw new ConfigParseException("Parsing config file error, config file: " + resource.getURI(), e);
         }
         finally

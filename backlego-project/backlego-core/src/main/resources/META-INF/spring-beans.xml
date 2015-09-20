@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spring:spring xmlns:spring="http://www.hsddf.com/backlego/spring"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<spring:configLocations>
+		<spring:configLocation>
+			<spring:priority>10</spring:priority>
+			<spring:value>classpath*:META-INF/back11lego-core/spring-beans.xml</spring:value>
+		</spring:configLocation>
+	</spring:configLocations>
+</spring:spring>
