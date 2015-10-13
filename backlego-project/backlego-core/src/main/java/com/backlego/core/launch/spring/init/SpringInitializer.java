@@ -10,17 +10,23 @@
 */
 package com.backlego.core.launch.spring.init;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import com.backlego.core.launch.xml.loader.exception.ConfigParseException;
 import com.backlego.core.launch.xml.loader.impl.XmlConfigLoaderImpl;
 import com.backlego.core.launch.xml.loader.merger.SpringMerger;
-import com.backlego.core.launch.xml.loader.model.Launcher;
+import com.backlego.core.launch.xml.spring.model.ConfigLocation;
 import com.backlego.core.launch.xml.spring.model.Spring;
 
 /**
@@ -52,13 +58,36 @@ public class SpringInitializer
             configLoader.setMerger(new SpringMerger());
             try
             {
-                configLoader.loadAndMerge("classpath*:META-INF/backlego-spring/*-beans.xml");
+                Spring spring = configLoader.loadAndMerge("classpath*:META-INF/backlego-spring/*-beans.xml");
+                //取出local
+                List<ConfigLocation> ConfigLocations = spring.getConfigLocations().getConfigLocation();
+                List<String> locations = new ArrayList<String>();
+                ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+                for (ConfigLocation configLocation : ConfigLocations)
+                {
+                    System.out.println(configLocation.getValue());
+                    try
+                    {
+                        Resource[] resources = resourcePatternResolver.getResources("classpath*:"+configLocation.getValue());
+                        for(Resource resource : resources)
+                        {
+                            locations.add(resource.getURI().getPath());
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        // TODO Auto-generated
+                        e.printStackTrace();
+                        
+                    }
+                }
+                System.out.println(locations);
             }
             catch (ConfigParseException e)
             {
                 // TODO Auto-generated
                 e.printStackTrace();
-                	
+                
             }
             ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:conf/*beans.xml");
             ClassLoader ccl = Thread.currentThread().getContextClassLoader();
@@ -70,7 +99,7 @@ public class SpringInitializer
         }
         catch (BeansException e)
         {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         
         long elapsedTime = System.currentTimeMillis() - startTime;
