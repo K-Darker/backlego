@@ -10,14 +10,14 @@
 	<!-- 读取数据库属性文件 <context:property-placeholder location="classpath:dbconn.properties" 
 		/> -->
 	<bean id="propertyConfigurerDB"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		class="com.backlego.db.encryptproperty.DecryptPropertyPlaceholderConfigurer">
 		<property name="ignoreUnresolvablePlaceholders" value="true" /> 
 		<property name="locations">
 			<list>
 				<!--数据库配置文件 -->
-				<value>classpath:conf/jdbc.properties</value>
 			</list>
 		</property>
+		 <property name="keyLocation" value="classpath:keyStore/db.key" />  
 	</bean>
 	<!-- 配置数据源 将其数据库连接的信息配置到属性文件里 --><!-- dbcp的数据库连接池的 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -36,4 +36,3 @@
 		<property name="minIdle" value="1" />
 	</bean>
 </beans>
-
