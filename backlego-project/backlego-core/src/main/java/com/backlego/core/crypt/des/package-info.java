@@ -15,4 +15,4 @@
 * @author Administrator
 * @version [版本号, 2015-10-14]
 */
-package com.backlego.core.launch.crypt.des;
+package com.backlego.core.crypt.des;
