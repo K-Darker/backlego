@@ -17,14 +17,14 @@ public class Test implements Watcher
     {
         try
         {
-            ZooKeeper zk = new ZooKeeper("192.168.51.39:2181", 5000, new Test());
+            ZooKeeper zk = new ZooKeeper("127.0.0.1:2181", 5000, new Test());
             System.out.println(zk.getState());
             System.out.println(zk.getSessionId());
             System.out.println(zk.getSessionPasswd());
             //zk.create(path, data, acl, createMode)
             try
             {
-                List<String> lists = zk.getChildren("/tes", new Test());
+                List<String> lists = zk.getChildren("/dsf", new Test());
                 System.out.println(lists);
             }
             catch (KeeperException e1)
