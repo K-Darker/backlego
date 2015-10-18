@@ -17,28 +17,28 @@ public class Test implements Watcher
     {
         try
         {
-            ZooKeeper zk = new ZooKeeper("127.0.0.1:2181", 5000, new Test());
+            ZooKeeper zk = new ZooKeeper("127.0.0.1:2186,127.0.0.1:2185", 5000, new Test());
             System.out.println(zk.getState());
             System.out.println(zk.getSessionId());
             System.out.println(zk.getSessionPasswd());
             //zk.create(path, data, acl, createMode)
-            try
-            {
-                List<String> lists = zk.getChildren("/dsf", new Test());
-                System.out.println(lists);
-            }
-            catch (KeeperException e1)
-            {
-                // TODO Auto-generated
-                		e1.printStackTrace();
-                	
-            }
-            catch (InterruptedException e1)
-            {
-                // TODO Auto-generated
-                		e1.printStackTrace();
-                	
-            }
+//            try
+//            {
+//                List<String> lists = zk.getChildren("/", new Test());
+//                System.out.println(lists);
+//            }
+//            catch (KeeperException e1)
+//            {
+//                // TODO Auto-generated
+//                		e1.printStackTrace();
+//                	
+//            }
+//            catch (InterruptedException e1)
+//            {
+//                // TODO Auto-generated
+//                		e1.printStackTrace();
+//                	
+//            }
             try
             {
                 cdl.await();
