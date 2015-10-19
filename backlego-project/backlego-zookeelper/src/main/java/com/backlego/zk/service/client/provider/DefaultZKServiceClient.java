@@ -11,16 +11,12 @@
 package com.backlego.zk.service.client.provider;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
-import org.jboss.netty.util.internal.ConcurrentHashMap;
 
-import com.backlego.zk.config.ZKServerDefinition;
 import com.backlego.zk.service.client.ZKClient;
-import com.test.Test;
 
 /**
 * 连接zk的默认实现
