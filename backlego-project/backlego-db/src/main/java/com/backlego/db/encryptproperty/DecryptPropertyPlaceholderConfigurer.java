@@ -69,26 +69,26 @@ public class DecryptPropertyPlaceholderConfigurer extends PropertyPlaceholderCon
     @Override
     protected String convertProperty(String propertyName, String propertyValue)
     {
-        if (propertyName.contains(PASSWORD))
-        {
-            String password = propertyValue;
-            //解密
-            if (keyLocation != null && StringUtils.isNotEmpty(password))
-            {
-                try
-                {
-                    Key secretKey = DESEncryptUtil.getKey(keyLocation.getInputStream());
-                    String context = DESEncryptUtil.decrypt(secretKey, password);
-                    propertyValue = context;
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                    
-                }
-            }
-            
-        }
+//        if (propertyName.contains(PASSWORD))
+//        {
+//            String password = propertyValue;
+//            //解密
+//            if (keyLocation != null && StringUtils.isNotEmpty(password))
+//            {
+//                try
+//                {
+//                    Key secretKey = DESEncryptUtil.getKey(keyLocation.getInputStream());
+//                    String context = DESEncryptUtil.decrypt(secretKey, password);
+//                    propertyValue = context;
+//                }
+//                catch (IOException e)
+//                {
+//                    e.printStackTrace();
+//                    
+//                }
+//            }
+//            
+//        }
         // TODO Auto-generated
         return super.convertProperty(propertyName, propertyValue);
         
