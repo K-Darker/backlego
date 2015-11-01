@@ -8,7 +8,7 @@
 * 修改单号: <修改单号>
 * 修改内容:<修改内容>
 */
-package com.backlego.zk.service.client.provider;
+package com.backlego.zk.service.subscribe.provider;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
-import com.backlego.zk.service.client.ZKClient;
+import com.backlego.zk.service.subscribe.ZKClient;
 
 /**
 * 连接zk的默认实现

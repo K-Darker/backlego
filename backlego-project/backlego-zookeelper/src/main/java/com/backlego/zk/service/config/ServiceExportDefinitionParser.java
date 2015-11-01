@@ -13,8 +13,9 @@ package com.backlego.zk.service.config;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.transaction.interceptor.TransactionInterceptor;
 import org.w3c.dom.Element;
+
+import com.backlego.zk.service.publish.provider.DelegatingPublishProviderResolver;
 
 /**
 * <一句话功能简述>
@@ -23,12 +24,12 @@ import org.w3c.dom.Element;
 * @author Administrator
 * @version [版本号, 2015-10-31]
 */
-public class ServiceEmportDefinitionParser extends AbstractSingleBeanDefinitionParser
+public class ServiceExportDefinitionParser extends AbstractSingleBeanDefinitionParser
 {
     @Override
     protected Class<?> getBeanClass(Element element)
     {
-        return TransactionInterceptor.class;
+        return DelegatingPublishProviderResolver.class;
     }
     
     @Override

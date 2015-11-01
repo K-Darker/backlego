@@ -26,7 +26,7 @@ public class ServiceNamespaceHandler  extends NamespaceHandlerSupport
     public void init()
     {
         registerBeanDefinitionParser("import", new ServiceImportDefinitionParser());
-        registerBeanDefinitionParser("export", new ServiceEmportDefinitionParser());
+        registerBeanDefinitionParser("export", new ServiceExportDefinitionParser());
     }
     
 }

@@ -1,5 +1,5 @@
 /*
-* 文 件 名: DefaultZKServiceRegistry.java
+* 文 件 名: package-info.java
 * 版 权: xxx., Ltd. Copyright 2015-2015, All rights reserved
 * 描 述: <描述>
 * 修 改 人:Administrator
@@ -8,7 +8,6 @@
 * 修改单号: <修改单号>
 * 修改内容:<修改内容>
 */
-package com.backlego.zk.service.registry.provider;
 /**
 * <一句话功能简述>
 * <功能详细描述>
@@ -16,9 +15,4 @@ package com.backlego.zk.service.registry.provider;
 * @author Administrator
 * @version [版本号, 2015-10-18]
 */
-public class DefaultZKServiceRegistry
-{
-    
-}
-
-	
+package com.backlego.zk.service.publish.provider;

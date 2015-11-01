@@ -24,5 +24,7 @@
 		</xsd:attribute>
 		<xsd:attribute name="version" type="xsd:string">
 		</xsd:attribute>
+		<xsd:attribute name="ref" type="xsd:string">
+		</xsd:attribute>
 	</xsd:complexType>
 </xsd:schema>

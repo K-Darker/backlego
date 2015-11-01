@@ -8,7 +8,7 @@
 * 修改单号: <修改单号>
 * 修改内容:<修改内容>
 */
-package com.backlego.zk.service.registry;
+package com.backlego.zk.service.publish;
 
 import java.io.IOException;
 

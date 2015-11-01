@@ -15,4 +15,4 @@
 * @author Administrator
 * @version [版本号, 2015-10-18]
 */
-package com.backlego.zk.service.client.provider;
+package com.backlego.zk.service.subscribe;
