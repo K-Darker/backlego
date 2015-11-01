@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.backlego.zookeepler.com/schema/service"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	targetNamespace="http://www.backlego.zookeepler.com/schema/service"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+
+	<xsd:element name="import" type="importType">
+	</xsd:element>
+	<xsd:element name="export" type="exportType">
+	</xsd:element>
+	<xsd:complexType name="importType">
+		<xsd:attribute name="id" type="xsd:ID">
+		</xsd:attribute>
+		<xsd:attribute name="serviceName" type="xsd:string">
+		</xsd:attribute>
+		<xsd:attribute name="version" type="xsd:string">
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="exportType">
+		<xsd:attribute name="id" type="xsd:ID">
+		</xsd:attribute>
+		<xsd:attribute name="serviceName" type="xsd:string">
+		</xsd:attribute>
+		<xsd:attribute name="version" type="xsd:string">
+		</xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>
