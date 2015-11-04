@@ -15,8 +15,6 @@ import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
-import com.test.Test;
-
 /**
 * <一句话功能简述>
 * <功能详细描述>
@@ -24,12 +22,12 @@ import com.test.Test;
 * @author Administrator
 * @version [版本号, 2015-10-31]
 */
-public class ServiceImportDefinitionParser extends AbstractSingleBeanDefinitionParser
+public class ServiceImporterDefinitionParser extends AbstractSingleBeanDefinitionParser
 {
     @Override
     protected Class<?> getBeanClass(Element element)
     {
-        return Test.class;
+        return Object.class;
     }
     
     @Override

@@ -11,6 +11,9 @@
 package com.test;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.util.ClassUtils;
+
+import com.backlego.zk.service.definition.ServiceContext;
 
 /**
 * <一句话功能简述>
@@ -31,8 +34,7 @@ public class SpringTest
     public static void main(String[] args)
     {
         ClassPathXmlApplicationContext beanFactory=new ClassPathXmlApplicationContext("classpath*:test-beans.xml");
-        System.out.println(beanFactory.getBean("name1"));
-        System.out.println(beanFactory.getBean("name1"));
+        System.out.println(beanFactory.getBean("dsf.service.name"));
     }
     
 }

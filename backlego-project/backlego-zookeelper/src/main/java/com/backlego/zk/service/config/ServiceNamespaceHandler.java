@@ -10,6 +10,7 @@
 */
 package com.backlego.zk.service.config;
 
+import org.springframework.beans.factory.xml.NamespaceHandler;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
@@ -25,10 +26,9 @@ public class ServiceNamespaceHandler  extends NamespaceHandlerSupport
     @Override
     public void init()
     {
-        registerBeanDefinitionParser("import", new ServiceImportDefinitionParser());
-        registerBeanDefinitionParser("export", new ServiceExportDefinitionParser());
+        registerBeanDefinitionParser("importer", new ServiceImporterDefinitionParser());
+        registerBeanDefinitionParser("exporter", new ServiceExporterDefinitionParser());
     }
-    
 }
 
 	

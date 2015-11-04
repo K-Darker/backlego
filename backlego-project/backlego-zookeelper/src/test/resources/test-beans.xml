@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>  
 <beans xmlns="http://www.springframework.org/schema/beans"  
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:service="http://www.backlego.zookeepler.com/schema/service"
+    xmlns:dsf="http://www.backlego.zookeepler.com/schema/service"
     xmlns:tx="http://www.springframework.org/schema/tx"
     xsi:schemaLocation="  
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.backlego.zookeepler.com/schema/service http://www.backlego.zookeepler.com/schema/service/zk-service-1.0.xsd">
-    <service:export id="name1" ref="helloRMIService"/>
+    
     <bean id="helloRMIService" class="com.test.HelloRMIServiceImpl"></bean>
     <bean id="rmiService" class="org.springframework.remoting.rmi.RmiServiceExporter">
     	<property name="service" ref="helloRMIService"></property>
@@ -14,4 +14,8 @@
     	<property name="serviceInterface" value="com.test.HelloRMIService"></property>
     	<property name="registryPort" value="9999"></property>
     </bean>
+    <dsf:exporter name="dsf.service.name" interface="com.test.HelloRMIService" ref="helloRMIService"
+       version="1.0.0"/>
+    <dsf:exporter name="helloRMIService1" interface="com.test.HelloRMIService" ref="helloRMIService"
+       version="1.0.0"/>   
 </beans> 
