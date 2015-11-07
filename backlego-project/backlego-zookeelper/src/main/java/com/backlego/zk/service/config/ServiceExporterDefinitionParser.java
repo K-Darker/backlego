@@ -65,7 +65,7 @@ public class ServiceExporterDefinitionParser extends AbstractSingleBeanDefinitio
         checkService(element);
         String name = element.getAttribute(EXPORTER_BEAN_NAME);
         String version = element.getAttribute(EXPORTER_VERSION);
-        builder.addPropertyValue("publishId", name + " " + version);
+        builder.addPropertyValue("publishId", name + "#" + version);
         //2.从Context里面获得没有获得就创建 publishServiceDefinitionMap
         RootBeanDefinition serviceContextDefinition = null;
         if (!parserContext.getRegistry().containsBeanDefinition(BEAN_CONFIGURER_BEAN_NAME))
