@@ -9,6 +9,9 @@
 * 修改内容:<修改内容>
 */
 package com.test;
+
+import java.io.Serializable;
+
 /**
 * <一句话功能简述>
 * <功能详细描述>
@@ -16,7 +19,7 @@ package com.test;
 * @author Administrator
 * @version [版本号, 2015-10-31]
 */
-public class HelloRMIServiceImpl implements HelloRMIService
+public class HelloRMIServiceImpl implements Serializable,HelloRMIService
 {
     public int add(int a,int b)
     {

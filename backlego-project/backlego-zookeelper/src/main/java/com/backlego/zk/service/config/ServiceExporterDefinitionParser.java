@@ -34,7 +34,7 @@ import com.backlego.zk.service.publish.provider.DelegatingPublishProviderResolve
 */
 public class ServiceExporterDefinitionParser extends AbstractSingleBeanDefinitionParser
 {
-    public static final String BEAN_CONFIGURER_BEAN_NAME = "test";
+    public static final String BEAN_CONFIGURER_BEAN_NAME = "exporterBeanDefinition";
     
     public static final String EXPORTER_BEAN_ID = "id";
     
@@ -107,7 +107,7 @@ public class ServiceExporterDefinitionParser extends AbstractSingleBeanDefinitio
         String interfaceName = element.getAttribute(EXPORTER_INTERFACE);
         map.setMergeEnabled(true);
         //放入key和value
-        TypedStringValue typedValue = new TypedStringValue(name + " " + version, String.class);
+        TypedStringValue typedValue = new TypedStringValue(name + "#" + version, String.class);
         GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
         element.setAttribute(EXPORTER_BEAN_ID, name);
         genericBeanDefinition.setBeanClass(PublishServiceDefinition.class);

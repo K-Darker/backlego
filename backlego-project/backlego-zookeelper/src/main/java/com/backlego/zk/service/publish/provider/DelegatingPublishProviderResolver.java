@@ -11,6 +11,7 @@
 package com.backlego.zk.service.publish.provider;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.FactoryBean;
@@ -48,7 +49,8 @@ public class DelegatingPublishProviderResolver implements FactoryBean<Object>, B
     {
         this.publishId = publishId;
     }
-
+    
+    @SuppressWarnings("deprecation")
     @Override
     public Object getObject()
         throws Exception
@@ -56,17 +58,35 @@ public class DelegatingPublishProviderResolver implements FactoryBean<Object>, B
         ServiceContext serviceContext = null;
         String serviceContextBeanName = ServiceExporterDefinitionParser.BEAN_CONFIGURER_BEAN_NAME;
         //从容器里面取
-        if(beanFactory.getBean(serviceContextBeanName) instanceof ServiceContext)
+        if (beanFactory.getBean(serviceContextBeanName) instanceof ServiceContext)
         {
-            serviceContext = (ServiceContext) beanFactory.getBean(serviceContextBeanName);
+            serviceContext = (ServiceContext)beanFactory.getBean(serviceContextBeanName);
         }
-        PublishServiceDefinition publishServiceDefinition = serviceContext.getPublishServiceDefinitionMap().get(publishId);
+        PublishServiceDefinition publishServiceDefinition =
+            serviceContext.getPublishServiceDefinitionMap().get(publishId);
         publishObject = publishServiceDefinition.getRef();
         //校验要发布的对象实例是接口的实例么
-        Class<?> interfaceClass = ClassUtils.getUserClass(publishServiceDefinition.getInterfaceName());
-
+        Class<?> interfaceClass = ClassUtils.forName(publishServiceDefinition.getInterfaceName());
+        if (!isPublishServiceInstance(publishObject, interfaceClass))
+        {
+            throw new BeanCreationException("create bean failed because " + publishObject.getClass()
+                + " is not instanceof " + interfaceClass);
+        }
         return publishObject;
         
+    }
+    
+    public boolean isPublishServiceInstance(Object publishObject, Class<?> interfaceClass)
+    {
+        Class<?> classInterfaces[] = ClassUtils.getAllInterfaces(publishObject);
+        for (Class<?> inter : classInterfaces)
+        {
+            if (inter.equals(interfaceClass))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override
