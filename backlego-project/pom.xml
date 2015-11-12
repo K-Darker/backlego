@@ -19,6 +19,7 @@
 		<module>backlego-runtime</module>
 		<module>backlego-struts</module>
 		<module>backlego-zookeelper</module>
+		<module>backlego-service</module>
 	</modules>
 
 	<properties>
