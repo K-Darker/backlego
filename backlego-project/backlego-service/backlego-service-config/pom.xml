@@ -2,10 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>backlego-service</groupId>
-    <artifactId>backlego-service</artifactId>
+    <artifactId>backlego-service-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>backlego-service-config</groupId>
   <artifactId>backlego-service-config</artifactId>
   <packaging>pom</packaging>
   <description>对应发布的model对象，可以是spring的bean也可以不是</description>

@@ -2,21 +2,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>backlego-service-config</groupId>
+		<groupId>backlego-service</groupId>
 		<artifactId>backlego-service-config</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>backlego-service-config-spring</groupId>
 	<artifactId>backlego-service-config-spring</artifactId>
 	<description>对spring的集成的bean</description>
 	<dependencies>
 		<dependency>
-			<groupId>backlego-service-config-api</groupId>
+			<groupId>backlego-service</groupId>
 			<artifactId>backlego-service-config-api</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>
-			<groupId>backlego-service-common</groupId>
+			<groupId>backlego-service</groupId>
 			<artifactId>backlego-service-common</artifactId>
 			<version>${version}</version>
 		</dependency>
