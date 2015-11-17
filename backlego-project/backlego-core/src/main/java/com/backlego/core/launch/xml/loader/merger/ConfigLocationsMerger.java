@@ -47,6 +47,8 @@ public class ConfigLocationsMerger extends AbstractMerger<ConfigLocations> imple
         }
         
         ConfigLocations configLocations = new ConfigLocations();
+        configLocations.getCurrentClasspath().addAll(object1.getCurrentClasspath());
+        configLocations.getCurrentClasspath().addAll(object2.getCurrentClasspath());
         configLocations.getConfigLocation().addAll(object1.getConfigLocation());
         configLocations.getConfigLocation().addAll(object2.getConfigLocation());
         Collections.sort(configLocations.getConfigLocation(), this);

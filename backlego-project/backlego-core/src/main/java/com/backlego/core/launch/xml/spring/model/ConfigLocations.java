@@ -10,6 +10,7 @@
 */
 package com.backlego.core.launch.xml.spring.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,9 @@ import java.util.List;
 */
 public class ConfigLocations
 {
-    private List<ConfigLocation> configLocation;
+    private List<String> currentClasspath = new ArrayList<String>();
+    
+    private List<ConfigLocation> configLocation = new ArrayList<ConfigLocation>();
     
     /**
     * @return 返回  configLocation
@@ -37,6 +40,22 @@ public class ConfigLocations
     public void setConfigLocation(List<ConfigLocation> configLocation)
     {
         this.configLocation = configLocation;
+    }
+    
+    /**
+    * @return 返回  currentClasspath
+    */
+    public List<String> getCurrentClasspath()
+    {
+        return currentClasspath;
+    }
+    
+    /**
+    * @param  currentClasspath进行赋值
+    */
+    public void setCurrentClasspath(List<String> currentClasspath)
+    {
+        this.currentClasspath = currentClasspath;
     }
     
 }

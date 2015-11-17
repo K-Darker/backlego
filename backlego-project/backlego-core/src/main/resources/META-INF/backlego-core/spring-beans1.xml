@@ -4,7 +4,7 @@
 	<spring:configLocations>
 		<spring:configLocation>
 			<spring:priority>10</spring:priority>
-			<spring:value>classpath*:META-INF/back11lego-core/spring-beans.xml</spring:value>
+			<spring:value>classpath*:META-INF/backlego-core/spring-beans.xml</spring:value>
 		</spring:configLocation>
 	</spring:configLocations>
 </spring:spring>

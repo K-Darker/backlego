@@ -16,14 +16,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.beans.BeansException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import com.backlego.core.launch.xml.loader.exception.ConfigParseException;
+import com.backlego.core.launch.xml.loader.impl.SpringXmlConfigLoaderImpl;
 import com.backlego.core.launch.xml.loader.impl.XmlConfigLoaderImpl;
 import com.backlego.core.launch.xml.loader.merger.SpringMerger;
 import com.backlego.core.launch.xml.spring.model.ConfigLocation;
@@ -38,13 +39,21 @@ import com.backlego.core.launch.xml.spring.model.Spring;
 */
 public class SpringInitializer
 {
+    private static Log logger = LogFactory.getLog(SpringInitializer.class);
+    
+    private static final String PROP_CONFIG_LOCATION = "com.backlego.spring.init.config-location";
+    
+    /** The Constant DEFAULT_CONFIG_LOCATION. */
+    private static final String DEFAULT_CONFIG_LOCATION = "classpath*:META-INF/backlego-*/spring-beans.xml";
+    
     private static final Map<ClassLoader, ApplicationContext> currentContextPerThread =
         new ConcurrentHashMap<ClassLoader, ApplicationContext>(1);
     
     public void run()
     {
+        String configLocation = System.getProperty(PROP_CONFIG_LOCATION, DEFAULT_CONFIG_LOCATION);
         //系统参数初始化
-        System.out.println("SpringInit:" + SpringInitializer.class);
+        logger.info("SpringInit:" + SpringInitializer.class);
         long startTime = System.currentTimeMillis();
         // 加载log4j
         //initLog4j();
@@ -52,44 +61,10 @@ public class SpringInitializer
         try
         {
             // java加载所有的配置文件
-            //String [] locations = StandardLaunch.initConfigureList.toArray((new String[StandardLaunch.initConfigureList.size()]));
-            XmlConfigLoaderImpl<Spring> configLoader = new XmlConfigLoaderImpl<Spring>();
-            configLoader.setContextPath(Spring.class.getPackage().getName());
-            configLoader.setMerger(new SpringMerger());
-            try
-            {
-                Spring spring = configLoader.loadAndMerge("classpath*:META-INF/backlego-spring/*-beans.xml");
-                //取出local
-                List<ConfigLocation> ConfigLocations = spring.getConfigLocations().getConfigLocation();
-                List<String> locations = new ArrayList<String>();
-                ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-                for (ConfigLocation configLocation : ConfigLocations)
-                {
-                    System.out.println(configLocation.getValue());
-                    try
-                    {
-                        Resource[] resources = resourcePatternResolver.getResources("classpath*:"+configLocation.getValue());
-                        for(Resource resource : resources)
-                        {
-                            locations.add(resource.getURI().getPath());
-                        }
-                    }
-                    catch (IOException e)
-                    {
-                        // TODO Auto-generated
-                        e.printStackTrace();
-                        
-                    }
-                }
-                System.out.println(locations);
-            }
-            catch (ConfigParseException e)
-            {
-                // TODO Auto-generated
-                e.printStackTrace();
-                
-            }
-            ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:conf/*beans.xml");
+            Spring spring = loadInitSpring(configLocation);
+            SpringResourcesXmlApplicationContext ctx =
+                new SpringResourcesXmlApplicationContext(getConfigResources(spring));
+            ctx.start();
             ClassLoader ccl = Thread.currentThread().getContextClassLoader();
             if (ccl != null)
             {
@@ -97,13 +72,64 @@ public class SpringInitializer
             }
             
         }
-        catch (BeansException e)
+        catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error("init spring bean failed", e);
         }
         
         long elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println("============================end cost " + elapsedTime + "ms ====");
-        
+        System.out.println("============================end cost " + elapsedTime + "ms ==============");
+    }
+    
+    public Spring loadInitSpring(String configLocation)
+    {
+        try
+        {
+            XmlConfigLoaderImpl<Spring> configLoader = new SpringXmlConfigLoaderImpl();
+            configLoader.setContextPath(Spring.class.getPackage().getName());
+            configLoader.setMerger(new SpringMerger());
+            Spring spring = configLoader.loadAndMerge(configLocation);
+            //取出local
+            return spring;
+        }
+        catch (ConfigParseException e)
+        {
+            logger.error("load sping" + configLocation + "failed", e);
+            return null;
+            
+        }
+    }
+    
+    public Resource[] getConfigResources(Spring spring)
+    {
+        List<ConfigLocation> configLocations = spring.getConfigLocations().getConfigLocation();
+        List<String> currentClasspath = spring.getConfigLocations().getCurrentClasspath();
+        List<Resource> locations = new ArrayList<Resource>();
+        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+        for (ConfigLocation configLocation : configLocations)
+        {
+            
+            try
+            {
+                Resource[] resources = resourcePatternResolver.getResources("classpath*:" + configLocation.getValue());
+                for (Resource resource : resources)
+                {
+                    for (String path : currentClasspath)
+                    {
+                        if (resource.getURL().getPath().startsWith(path))
+                        {
+                            locations.add(resource);
+                        }
+                    }
+                }
+                
+            }
+            catch (IOException e)
+            {
+                logger.error("get Config Resources" + configLocation + "failed", e);
+            }
+            
+        }
+        return locations.toArray(new Resource[locations.size()]);
     }
 }

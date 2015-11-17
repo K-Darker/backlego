@@ -1,13 +1,5 @@
 package com.test;
 
-import java.io.IOException;
-
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 public class Test
 {
@@ -20,27 +12,27 @@ public class Test
     
     public static void main(String[] args)
     {
-        // TODO Auto-generated
-//                BeanFactory bean = new ClassPathXmlApplicationContext("");
-        System.out.println(System.getProperty("java.class.path"));
-        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-       
-        try
-        {
-            Resource[] resources = resolver.getResources("classpath*:META-INF/*.xml");
-            //这样才能加载到
-            ClassPathXmlApplicationContext beanFactory=new ClassPathXmlApplicationContext("classpath*:META-INF/spring*.xml");
-//            XmlBeanFactory beanFactory1=new XmlBeanFactory(null);
-            System.out.println(beanFactory.getEnvironment());
-            SpringBeanTest springBeanTest = (SpringBeanTest)beanFactory.getBean("springBeanTest");
-            System.out.println(springBeanTest);
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated
-            		e.printStackTrace();
-            	
-        }
+//        // TODO Auto-generated
+////                BeanFactory bean = new ClassPathXmlApplicationContext("");
+//        System.out.println(System.getProperty("java.class.path"));
+//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//       
+//        try
+//        {
+//            Resource[] resources = resolver.getResources("classpath*:META-INF/*.xml");
+//            //这样才能加载到
+//            ClassPathXmlApplicationContext beanFactory=new ClassPathXmlApplicationContext("classpath*:META-INF/spring*.xml");
+////            XmlBeanFactory beanFactory1=new XmlBeanFactory(null);
+//            System.out.println(beanFactory.getEnvironment());
+//            SpringBeanTest springBeanTest = (SpringBeanTest)beanFactory.getBean("springBeanTest");
+//            System.out.println(springBeanTest);
+//        }
+//        catch (IOException e)
+//        {
+//            // TODO Auto-generated
+//            		e.printStackTrace();
+//            	
+//        }
     }
     
 }

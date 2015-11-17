@@ -12,8 +12,6 @@ package com.backlego.core.launch.xml.loader.merger;
 
 import java.util.List;
 
-import com.backlego.core.launch.xml.loader.model.Initializers;
-
 /**
 * <一句话功能简述>
 * <功能详细描述>

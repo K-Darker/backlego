@@ -33,7 +33,6 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import com.backlego.core.launch.xml.loader.XmlConfigLoader;
 import com.backlego.core.launch.xml.loader.exception.ConfigParseException;
 import com.backlego.core.launch.xml.loader.merger.Merger;
-import com.backlego.core.launch.xml.loader.model.Launcher;
 
 /**
 * <一句话功能简述>
@@ -42,7 +41,6 @@ import com.backlego.core.launch.xml.loader.model.Launcher;
 * @author Administrator
 * @version [版本号, 2015-9-9]
 */
-@SuppressWarnings("restriction")
 public class XmlConfigLoaderImpl<T> implements XmlConfigLoader<T>
 {
     /** The xml input factory. */
@@ -100,8 +98,8 @@ public class XmlConfigLoaderImpl<T> implements XmlConfigLoader<T>
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         try
         {
+            //需要xml ->java object的类
             JAXBContext context = JAXBContext.newInstance(contextPath);
-//            JAXBContext context = JAXBContext.newInstance(Launcher.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return load(locs, resourcePatternResolver, unmarshaller);
         }

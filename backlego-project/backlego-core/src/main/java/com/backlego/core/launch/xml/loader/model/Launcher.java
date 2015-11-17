@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 * @author Administrator
 * @version [版本号, 2015-9-8]
 */
-@SuppressWarnings("restriction")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "launcher")
 public class Launcher

@@ -9,6 +9,10 @@
 * 修改内容:<修改内容>
 */
 package com.backlego.core.launch.xml.loader.exception;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
 * <一句话功能简述>
 * <功能详细描述>
@@ -18,17 +22,20 @@ package com.backlego.core.launch.xml.loader.exception;
 */
 public class ConfigParseException extends Exception
 {
-
+    private static Log logger = LogFactory.getLog(ConfigParseException.class);
+    
     /**
     * 注释内容
     */
     private static final long serialVersionUID = 1L;
     
     public ConfigParseException()
-    {}
-    public ConfigParseException(String errorDesc,Exception e)
-    {}
+    {
+    }
+    
+    public ConfigParseException(String errorDesc, Exception e)
+    {
+        logger.error(errorDesc, e);
+    }
     
 }
-
-	
