@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spring xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<configLocations>
+		<configLocation>
+			<priority>10</priority>
+			<value>conf/backlego-db-beans.xml</value>
+		</configLocation>
+	</configLocations>
+</spring>
