@@ -1,6 +1,8 @@
 package com.test;
 
+import org.springframework.test.context.ContextConfiguration;
 
+@ContextConfiguration(locations={"/test-applicationContext.xml"})
 public class Test
 {
     
